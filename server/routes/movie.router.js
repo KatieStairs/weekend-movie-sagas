@@ -16,16 +16,28 @@ router.get('/', (req, res) => {
 
 });
 
-//GET route for JUST ONE movie:
+// GET route for the details of one movie:
 router.get('/details/:id', (req, res) => {
-  const queryText = 'SELECT "description" FROM "movies" WHERE id=$1;'
+  const queryText = 
+  `SELECT
+      "movies"."title",
+      "movies"."poster",
+      "movies"."description",
+      ARRAY_AGG("genres"."name") AS "genres"
+      FROM "movies"
+      JOIN "movies_genres" ON "movies"."id" = "movies_genres"."movie_id"
+      JOIN "genres" ON "movies_genres"."genre_id" = "genres"."id"
+      WHERE "movies"."id" = $1
+      GROUP BY movies.title, movies.description, movies.poster;`;
+  console.log('in /details/:id', req.params.id)
   pool.query(queryText, [req.params.id])
-    .then((result) => { res.send(result.rows); })
-    .catch((err) => {
-      console.log('Error completing SELECT movie query', err);
+    .then((response) => { res.send(response.rows); })
+    .catch((error) => {
+      console.log('Error completing SELECT detail query', error);
       res.sendStatus(500);
     });
 });
+
 
 router.post('/', (req, res) => {
   console.log(req.body);

@@ -1,21 +1,45 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import {useHistory, useParams } from 'react-router-dom';
 
 function Details() {
     const details = useSelector(store => store.details);
+    const dispatch = useDispatch();
+    const params = useParams();
+    const history = useHistory();
+
+    useEffect(() => {
+        const movieId = params.id;
+        console.log(movieId);
+
+        dispatch({
+            type: 'SAGA/GET_MOVIE_DESCRIPTION',
+            payload: movieId
+        })
+    }, [params.id]);
+
+    const backToMovieList=(event)=>{
+        event.preventDefault();
+        history.push('/');
+    }
 
     return (
         <>
         <h1>Details</h1>
-        {
-            details.map((detail) =>{
+        <ul>
+            {details.map((detail, index) => {
                 return(
-                    <Details key={detail.id} detail={detail}/>
-                    //<img key={favorite.id} src={favorite.url}/>
+                    <li key={index}>
+                        <img src={detail.poster}/>
+                        {detail.title}
+                        {detail.description}
+                        {detail.genres}
+                        <button onClick={backToMovieList}>Back to Movie List</button>
+                    </li>
                 )
-                
             })
         }
+        </ul>
         </>
     )
 }
