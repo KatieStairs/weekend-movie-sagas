@@ -5,12 +5,12 @@ import {useHistory, useParams } from 'react-router-dom';
 function Details() {
     const details = useSelector(store => store.details);
     const dispatch = useDispatch();
-    const params = useParams();
+    const params = useParams(details);
     const history = useHistory();
 
     useEffect(() => {
         const movieId = params.id;
-        console.log(movieId);
+        console.log(params);
 
         dispatch({
             type: 'SAGA/GET_MOVIE_DESCRIPTION',
