@@ -21,14 +21,14 @@ function MovieList() {
 
     return (
         <main>
-            <h1>MovieList</h1>
+            <h1>Movies</h1>
             <section className="movies">
                 {movies.map(movie => {
                     return (
-                        <div key={movie.id} >
+                        <div key={movie.id} onClick={()=>handleImageClick(movie)}>
                             <h3>{movie.title}</h3>
                             <img src={movie.poster} alt={movie.title}
-                            onClick={handleImageClick}/>
+                            />
                         </div>
                     );
                 })}

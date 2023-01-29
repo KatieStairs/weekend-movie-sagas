@@ -31,7 +31,10 @@ router.get('/details/:id', (req, res) => {
       GROUP BY movies.title, movies.description, movies.poster;`;
   console.log('in /details/:id', req.params.id)
   pool.query(queryText, [req.params.id])
-    .then((response) => { res.send(response.rows); })
+    .then((response) => { 
+      console.log('in /details/:id', req.params.id)
+      res.send(response.rows); 
+    })
     .catch((error) => {
       console.log('Error completing SELECT detail query', error);
       res.sendStatus(500);

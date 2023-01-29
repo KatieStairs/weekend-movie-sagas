@@ -34,7 +34,8 @@ function* fetchDetails(){
         const details = yield axios.get('/details/:id');
         console.log('get details', details.data)
         yield put({
-            type: 'SET_DETAILS', payload: details.data
+            type: 'SET_DETAILS', 
+            payload: details.data
         });
     } catch (error) {
         console.error('get details error', error)
@@ -68,6 +69,7 @@ const genres = (state = [], action) => {
 const details = (state = [], action) => {
     switch (action.type) {
         case 'SET_DETAILS':
+            console.log('action.payload', action.payload)
             return action.payload;
         default:
             return state;

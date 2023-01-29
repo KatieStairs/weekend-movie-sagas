@@ -10,7 +10,7 @@ function Details() {
 
     useEffect(() => {
         const movieId = params.id;
-        console.log(params);
+        console.log(params.id);
 
         dispatch({
             type: 'SAGA/GET_MOVIE_DESCRIPTION',
@@ -27,9 +27,9 @@ function Details() {
         <>
         <h1>Details</h1>
         <ul>
-            {details.map((detail, index) => {
+            {details.map((detail) => {
                 return(
-                    <li key={index}>
+                    <li key={detail.id}>
                         <img src={detail.poster}/>
                         {detail.title}
                         {detail.description}
